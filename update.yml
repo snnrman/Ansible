@@ -1,0 +1,37 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: CentOS upgrade
+      yum:
+        name: '*'
+        state: latest
+        update_cache: true
+      when: ansible_os_family == "RedHat"
+      
+     - name: Reboot if packages were updated
+    reboot:
+    when: yum_update_status.changed
+
+     - name: Cache update
+       apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+       when: ansible_os_family == "Debian"
+      
+     - name: Pkg update
+       apt:
+        name: "*"
+        state: latest
+       when: ansible_os_family == "Debian"
+      
+     - name: Debian update
+       apt:
+        upgrade: dist
+       when: ansible_os_family == "Debian"
+       
+     - name: Reboot if packages were updated
+    reboot:
+      post_reboot_delay: 60
+    when: apt_update_status.changed
