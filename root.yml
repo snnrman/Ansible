@@ -1,1 +1,40 @@
-
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Add user1 RH
+    user:
+      name: user1
+      shell: /bin/bash
+     groups: wheel
+     state: present
+    remove: yes
+    when: ansible_os_family == 'RedHat'
+    
+  - name: Add user1 DEB
+    user:
+      name: user2
+      shell: /bin/bash
+     groups: sudo
+     state: present
+    remove: yes
+    when: ansible_os_family == 'Debian'
+    
+  - name: Add user2 RH
+    user:
+      name: user2
+      shell: /bin/bash
+     groups: wheel
+     state: present
+    remove: yes
+    when: ansible_os_family == 'RedHat'
+    
+ - name: Add user2 DEB
+    user:
+      name: user2
+      shell: /bin/bash
+     groups: sudo
+     state: present
+    remove: yes
+    when: ansible_os_family == 'Debian'
+    
