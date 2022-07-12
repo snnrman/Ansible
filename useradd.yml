@@ -1,1 +1,28 @@
-
+---
+- name: Create user
+  hosts: all
+  become: true
+  tasks:
+    - name: Create user1
+      user: user1
+       password: {{ 'pswwrodddd' | password_hash('sha512', '5b3145b7dce1fa8366297aa960ecd830e4bacd2237822e7cae8952b310703539975be0fb4b42d66e6dc62a6ce1f317ebc8fc675ce4657ba68fc92b05572c8168') }}
+       groups:
+          - docker
+       state: present
+       shell: /bin/bash
+       system: no
+       create_home: yes
+       home: /home/user1
+       generate_ssh_key: true
+       
+    - name: Create user2
+      user: user2
+       password: {{ 'pssw0rd' | password_hash('sha512', '94a4ea04368c0749fc517810793468b0906b235041090bd738fda29d50acbc322cce5982c55c965529f2cad6f466e63ec56cbec4a0066cc9b3847d954c9d8140') }}
+       groups:
+          - docker
+       state: present
+       shell: /bin/bash
+       system: no
+       create_home: yes
+       home: /home/user2
+       generate_ssh_key: true
