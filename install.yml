@@ -10,7 +10,7 @@
       - wget
       - htop
     update_cache: true
-    when: ansible_distribution == 'Debian'
+    when: ansible_os_family == 'Debian'
 
     - name: Install packages
     yum: pkg={{ item }}
@@ -20,4 +20,4 @@
       - wget
       - htop
     update_cache: true
-    when: ansible_distribution == 'CentOS'
+    when: ansible_os_family == 'RedHat'
